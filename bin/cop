@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+
+ROOT_DIR = Pathname.new(__dir__).parent
+GLOB     = File.join(ROOT_DIR, "qd3v-*")
+PROJECTS = Dir[GLOB].select { File.directory?(it) }
+CMD      = 'cd "%s" && bundle exec rubocop --autocorrect'
+
+PROJECTS.map do
+  cmd = CMD % [it]
+  Thread.new { puts %x[#{cmd}] }
+end.map(&:join)

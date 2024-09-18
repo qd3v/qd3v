@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gemspec
+
+gem 'rubocop-performance', require: false
+
+path '..' do
+  gem 'qd3v-core'
+end

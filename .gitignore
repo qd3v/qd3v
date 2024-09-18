@@ -1,0 +1,36 @@
+# Commmon files
+
+.DS_Store
+.rake_tasks
+.byebug_history
+Brewfile.lock.json
+
+# Commmon dirs
+.build
+.idea
+.bundle
+.coverage
+.secrets
+.swagger
+
+# CUSTOM
+
+# Jetbrains run configurations and requests collection
+.run
+.requests
+
+.rubocop_todo.yml
+
+# Not keeping in subdirs
+.tools-versions
+!/.tools-versions
+.env*
+!**/.env.example
+
+# Dirs
+**/tmp/*
+!**/tmp/.keep
+**/log/*
+**/dev/*
+**/node_modules/*
+**/sorbet/rbi/**/*

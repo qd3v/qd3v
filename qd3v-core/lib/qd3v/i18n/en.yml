@@ -1,0 +1,5 @@
+en:
+  qd3v:
+    core:
+      err_kind:
+        dummy_error: "Dummy error used for testing"

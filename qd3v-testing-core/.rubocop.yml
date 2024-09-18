@@ -1,0 +1,11 @@
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  qd3v-core: .rubocop.yml
+
+# The inherit_mode.merge.Exclude directive tells RuboCop that the exclusions listed in
+# this file should be added to, rather than replace, RuboCop’s default list of exclusions.
+# https://mattbrictson.com/blog/including-and-excluding-files-in-rubocop
+inherit_mode:
+  merge:
+    - Exclude

@@ -1,0 +1,242 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+
+# The inherit_mode.merge.Exclude directive tells RuboCop that the exclusions listed in
+# this file should be added to, rather than replace, RuboCop’s default list of exclusions.
+# https://mattbrictson.com/blog/including-and-excluding-files-in-rubocop
+inherit_mode:
+  merge:
+    - Exclude
+
+# Regexps: regular expressions are always evaluated against absolute paths.
+
+# ------
+
+
+# The behavior of RuboCop can be controlled via the .rubocop.yml
+# configuration file. It makes it possible to enable/disable
+# certain cops (checks) and to alter their behavior if they accept
+# any parameters. The file can be placed either in your home
+# directory or in some project directory.
+#
+# RuboCop will start looking for the configuration file in the directory
+# where the inspected file is and continue its way up to the root directory.
+#
+# See https://docs.rubocop.org/rubocop/configuration
+
+AllCops:
+  TargetRubyVersion: 3.4
+  SuggestExtensions: no
+  NewCops: disable
+  StyleGuideBaseURL: https://rubystyle.guide
+  # All generated code
+  Exclude:
+    - "tmp/**/*"
+    - "log/**/*"
+    - "doc/**/*"
+    - "js/**/*"
+    - "db/schema.rb"
+
+#
+# STYLE
+#
+# https://docs.rubocop.org/rubocop/cops_style.html
+
+# There are thousands of them, and in reality doesn't affect performance much
+Style/StringLiterals:
+  Enabled: no
+  EnforcedStyle: double_quotes
+
+# "Tests #{success ? "PASS" : "FAIL"}"
+Style/StringLiteralsInInterpolation:
+  Enabled: yes
+  EnforcedStyle: single_quotes
+
+# =begin/=end
+Style/BlockComments:
+  Enabled: no
+
+Style/Documentation:
+  Enabled: no
+
+# Checks for if and unless statements that would fit on one line if written as modifier
+# With LineLength turned off leads to huge lines
+Style/IfUnlessModifier:
+  Enabled: yes
+
+# Prefer annotated tokens (like %<foo>s) over unannotated tokens (like %s).
+# Sure, someday...
+Style/FormatStringToken:
+  Enabled: no
+
+# Include is used at the top level. Use inside class or module.
+Style/MixinUsage:
+  Enabled: no
+
+# Comment the end of block
+Style/CommentedKeyword:
+  Enabled: no
+
+# Enforces the use of a single string formatting utility.
+# I'm ok with percent
+Style/FormatString:
+  Enabled: yes
+  EnforcedStyle: percent
+
+# No need in ruby 3
+Style/FrozenStringLiteralComment:
+  Enabled: yes
+  EnforcedStyle: never
+  AutoCorrect: yes
+
+# This is really context-dependent
+Style/RegexpLiteral:
+  Enabled: no
+  AutoCorrect: no
+  EnforcedStyle: percent_r
+  # If `false`, the cop will always recommend using `%r` if one or more
+  # slashes are found in the regexp string.
+  AllowInnerSlashes: no
+
+# Really not sure. At least we need to migrate to ruby3
+# https://docs.rubocop.org/rubocop/cops_style.html#stylemutableconstant
+Style/MutableConstant:
+  Enabled: no
+  EnforcedStyle: strict
+
+# Avoid using {...} for multi-line blocks.
+Style/BlockDelimiters:
+  Enabled: no
+
+# We chain a lot because of monads
+# https://docs.rubocop.org/rubocop/cops_style.html#stylemultilineblockchain
+Style/MultilineBlockChain:
+  Enabled: no
+
+# Converts IMEI 3554014423671441 to 3_554_014_423_671_441
+# And I don't need any help here
+Style/NumericLiterals:
+  Enabled: no
+
+
+# Let us decide. Will require 'English' everywhere
+# https://docs.rubocop.org/rubocop/cops_style.html#stylespecialglobalvars
+
+Style/SpecialGlobalVars:
+  Enabled: no
+  EnforcedStyle: use_perl_names
+
+#  Use warn instead of $stderr.puts to allow such output to be disabled.
+Style/StderrPuts:
+  Enabled: no
+
+
+#
+# LAYOUT
+#
+# https://docs.rubocop.org/rubocop/cops_layout.html
+
+Layout/ArgumentAlignment:
+  Enabled: yes
+  EnforcedStyle: with_first_argument
+
+Layout/ArrayAlignment:
+  Enabled: yes
+  EnforcedStyle: with_first_element
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Layout/HashAlignment:
+  Enabled: yes
+  AutoCorrect: yes
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+# We have really deep namespacing sometimes, adding +10 to perfect 80
+# Ignore lines with block comments
+Layout/LineLength:
+  Enabled: yes
+  Max: 100
+  Exclude:
+    - "bin/**/*" # binstubs we don't care about
+  AllowedPatterns:
+    - !ruby/regexp /\A *# /
+
+# Align `=`
+Layout/ExtraSpacing:
+  Enabled: yes
+  AutoCorrect: yes
+  ForceEqualSignAlignment: yes
+
+# where to place last )
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+# where to place last }
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: same_line
+
+Layout/TrailingWhitespace:
+  Enabled: yes
+  AutoCorrect: yes
+
+#
+# LINT
+#
+
+# allow in specs, it's handy
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - "spec/**/*"
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: no
+
+# Sort files before requiring them
+Lint/NonDeterministicRequireOrder:
+  Enabled: no
+
+#
+# NAMING
+#
+
+# We have root files matching standard pattern like `frigbot_com-http_services.rb`
+Naming/FileName:
+  Exclude:
+    - "lib/frigbot_com*.rb"
+
+Naming/ClassAndModuleCamelCase:
+  AllowedNames:
+    - ENV_BANG
+
+# expect_200 -> expect200
+Naming/VariableNumber:
+  Enabled: no
+
+# I know context better
+Naming/HeredocDelimiterNaming:
+  Enabled: no
+
+# I know context better
+Naming/MethodParameterName:
+  Enabled: no
+
+#
+# METRICS
+#
+
+Metrics:
+  Enabled: no
+  Exclude:
+    - "spec/**/*"
+
+# For some reason this needs to be forced again
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/MethodLength:
+  Max: 16
