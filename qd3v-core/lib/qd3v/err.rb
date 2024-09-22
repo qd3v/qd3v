@@ -87,11 +87,12 @@ module Qd3v
       T.assert_type!(binding, ::Binding)
 
       T.assert_type!(errors, T::Hash[Symbol, T::Array[String]]) if errors.present?
+      T.assert_type!(context, T::Hash[Symbol, T.anything]) if context.present?
 
       # NOTE: I don't think we ever need line num as a separate entity
       @err_kind    = err_kind
-      @errors      = errors || {}
-      @context     = context || {}
+      @errors      = errors.presence || {}
+      @context     = context.presence || {}
       @http_status = http_status
       @source      = binding.receiver.class.name
 
