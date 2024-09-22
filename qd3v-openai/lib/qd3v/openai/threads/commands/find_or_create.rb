@@ -15,9 +15,11 @@ module Qd3v
 
           # @return [Dry::Monads::Result::Success<Structs::Thread>, Dry::Monads::Result::Failure] The retrieved assistant wrapped in a Success. In case of an error, the method will return a Failure monad.
 
-          def call(thread_id:)
-            T.assert_type!(thread_id, String)
-            @cmd_find.fmap { Structs::Thread.new(**_1) }.alt_map { @cmd_create.call }
+          def call(id:)
+            T.assert_type!(id, String)
+            @cmd_find.call(id: )
+                     .fmap { Structs::Thread.new(**_1) }
+                     .alt_map { @cmd_create.call }
           end
         end
       end
