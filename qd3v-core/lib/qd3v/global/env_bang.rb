@@ -43,32 +43,11 @@ class ENV_BANG
     def to_s
       to_sym.to_s
     end
-  end
-end
 
-# Updating EB config
-ENV_BANG.config do |c|
-  add_class :log_level do |value, options|
-    if value.present?
-      value.to_s.downcase.strip.to_sym
-    else
-      options.fetch(:default, :info)
-    end
-  end
-
-  add_class :env do |value, *|
-    value = begin
-      value.to_s.to_sym
-    rescue StandardError
-      '<unparsable>'
+    def environments
+      @environments ||= %i[production staging development test]
     end
 
-    return value if %i[production staging development test].include?(value)
-
-    abort("Unknown environment: APP_ENV='#{value}'")
+    attr_writer :environments
   end
-
-  c.use :APP_ENV, class: :env
-  c.use :APP_LOG_LEVEL, class: :log_level, default: :info
-  c.use :APP_LOG_TO_STDOUT, class: :boolean, default: true
 end

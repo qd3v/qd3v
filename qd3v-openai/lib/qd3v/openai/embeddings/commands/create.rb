@@ -13,7 +13,7 @@ module Qd3v
           def call(text:, model: DEFAULT_EMBEDDING_MODEL)
             T.assert_type!(text, String)
 
-            handle_response(ErrKind::EMBEDDING_CREATION_ERROR) do
+            handle_response(err_kind: ErrKind::EMBEDDING_CREATION_ERROR) do
               client.embeddings(parameters: {input: text, model:})
             end.fmap do
               embedding = it.fetch(:data).first

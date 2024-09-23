@@ -1,1 +1,1 @@
-require_relative 'qd3v/core'
+require 'qd3v/core'

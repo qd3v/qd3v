@@ -17,7 +17,7 @@ module Qd3v
 
           def call(id:)
             T.assert_type!(id, String)
-            @cmd_find.call(id: )
+            @cmd_find.call(id:)
                      .fmap { Structs::Thread.new(**_1) }
                      .alt_map { @cmd_create.call }
           end

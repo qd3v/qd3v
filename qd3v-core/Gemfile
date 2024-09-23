@@ -10,5 +10,5 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'qd3v-testing-core', path: '../qd3v-testing-core'
 end

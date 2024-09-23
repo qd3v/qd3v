@@ -1,10 +1,10 @@
 ENV['APP_ENV']           = 'test'
 ENV['APP_LOG_LEVEL']     = 'debug'
-# Triggering eager load
-ENV['APP_TEST_COVERAGE'] = '1'
+ENV['APP_TEST_COVERAGE'] = 'no'
 
-require 'qd3v/core'
+require 'qd3v/testing/core'
 
-Qd3v::Core::Container.start(:logger)
+Qd3v::Core::Container.register_provider(:rspec, from: :qd3v_testing_core)
+Qd3v::Core::Container.start(:rspec)
 
 Dir[File.join(__dir__, 'support', '**', '*.rb')].each { |f| require f }

@@ -14,7 +14,7 @@ module Types
           "#{input.inspect} cannot be coerced to DateTime"
   end.freeze
 
-  # FAILED TO DEVELOP
+  # Had no time to develop this
   # UnixTimestamp = Coercible::Integer.constructor do |value|
   #   Time.at(value.to_i)
   # end

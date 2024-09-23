@@ -1,5 +1,14 @@
-This code is extracted from my pet projects. The process is WIP 
+This code is extracted from my pet projects (WIP) 
+
+# TODO
 
 # README
 
-TBD
+
+# `dry-system`
+
+```ruby
+# Stubbing providers
+require 'dry/system/stubs'
+Qd3v::Core::Container.enable_stubs!
+```

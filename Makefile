@@ -11,13 +11,9 @@ cop:
 	bin/cop
 
 cmd_bun = (cd $(1) && bundle install)
-bun:
+all/bun:
 	$(foreach project,$(PROJECTS),$(call cmd_bun,$(project));)
 
 cmd_bunu = (cd $(1) && bundle update)
 all/bunu:
 	$(foreach project,$(PROJECTS),$(call cmd_bunu,$(project));)
-
-cmd_tapioca = (cd $(1) && bundle exec tapioca gem && bundle exec tapioca annotations && bundle exec tapioca dsl)
-all/tapioca:
-	$(foreach project,$(PROJECTS),$(call cmd_tapioca,$(project));)

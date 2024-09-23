@@ -1,8 +1,11 @@
-require_relative 'lib/version'
+lib = File.expand_path("lib", __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require "qd3v/core/version"
 
 Gem::Specification.new do |spec|
   spec.name        = 'qd3v-core'
-  spec.summary     = 'Core'
+  spec.summary     = 'Base microframework for my pet projects'
   spec.description = 'Description of the Project'
 
   spec.author   = 'Ivan Kulagin'
@@ -12,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['allowed_push_host'] = ''
 
-  spec.version               = Qd3v::Core::VERSION
+  spec.version               = Qd3v::Core::VERSION.dup
   spec.platform              = Gem::Platform::RUBY
   spec.required_ruby_version = Gem::Requirement.new('~> 3.3')
 
@@ -24,7 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'ruby-enum'
   spec.add_runtime_dependency 'zeitwerk'
 
-  # awesome_print is dead and no longer being supported
   spec.add_runtime_dependency 'amazing_print'
   spec.add_runtime_dependency 'semantic_logger'
 
@@ -35,19 +37,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'dry-configurable'
   spec.add_runtime_dependency 'dry-initializer'
   spec.add_runtime_dependency 'dry-monads'
-  spec.add_runtime_dependency 'dry-schema'
   spec.add_runtime_dependency 'dry-system'
   spec.add_runtime_dependency 'dry-types'
-  spec.add_runtime_dependency 'dry-validation'
-
-  # WARN: Not using in core yet
-
-  spec.add_runtime_dependency 'dry-events'
-  spec.add_runtime_dependency 'dry-struct'
-
-  # These are not used anywhere currently
-  # spec.add_runtime_dependency 'dry-cli'
-  # spec.add_runtime_dependency 'dry-transformer'
 
   spec.require_paths = ['lib']
   spec.files         = Dir['lib/**/*.{rb,yml}']

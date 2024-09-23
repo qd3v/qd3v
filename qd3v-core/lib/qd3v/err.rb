@@ -1,4 +1,5 @@
 module Qd3v
+  # standard Error class
   class Err
     extend Forwardable
     include Enumerable

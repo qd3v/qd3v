@@ -1,38 +1,36 @@
-require 'qd3v-core'
+require 'qd3v/core'
 
 ENV_BANG.config do
-  use :APP_TEST_COVERAGE, class: :boolean, default: false
+  use :APP_TEST_COVERAGE, "Triggers eager load of tested app too",
+      class: :boolean, default: false
 end
+
+Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
 
 module Qd3v
   module Testing
     module Core
-      class Container < Dry::System::Container
-        import(from: Qd3v::Core::Container, keys: %w[logger env], as: :core)
+      def self.loader
+        @loader ||= Zeitwerk::Loader.for_gem_extension(Qd3v::Testing).tap do
+          it.log! if ENV['ZEITWERK_DEBUG']
 
-        use :env, inferrer: -> { ENV! }
-        use :zeitwerk, debug:      ENV['ZEITWERK_DEBUG'],
-                       eager_load: ENV!.prod? || ENV['APP_TEST_COVERAGE']
+          root = File.expand_path("..", __dir__)
 
-        configure do |config|
-          config.inflector = Dry::Inflector.new do |inflections|
-          end
-
-          config.name = :testing_core
-          config.root = __dir__
-          config.component_dirs.add('core') do |dir|
-            dir.memoize = true
-            dir.namespaces.add_root(const: "qd3v/testing/core")
-          end
+          it.ignore(
+            "#{root}/qd3v-testing-core.rb",
+            "#{root}/qd3v/testing/providers")
         end
       end
 
-      DI = Container.injector.freeze
-      Container.finalize!
+      loader.setup
 
-      at_exit do
-        Container.shutdown! # Call #shutdown on all providers
+      class Container < Dry::System::Container
+        register_provider(:logger, from: :qd3v_core)
       end
+
+      DI = Container.injector.freeze
+
+      at_exit { Container.shutdown! }
     end
   end
 end

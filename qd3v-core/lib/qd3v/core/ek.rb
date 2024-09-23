@@ -1,6 +1,18 @@
 module Qd3v
   module Core
+    # Holds i18n for err_kind
+    #
+    # @example
+    #   module A
+    #     class EK < Qd3v::Core::EK; end
+    #
+    #     module ErrKind
+    #       PROBLEM = EK[:problem] # i18n: en.a.err_kind.problem
+    #     end
+    #   end
+    #
     class EK
+      # @param [Symbol] err_kind
       def initialize(err_kind)
         @err_kind = err_kind
       end
@@ -15,6 +27,8 @@ module Qd3v
       def key
         @key ||= "#{namespace}.err_kind.#{err_kind}"
       end
+
+      alias to_s key
 
       # NOTE: i18n will prepend `<lang>`
       # Example `Qd3v::Services::EK` -> `qd3v.services`
@@ -31,10 +45,6 @@ module Qd3v
 
       def self.[](err_kind)
         new(err_kind)
-      end
-
-      def to_s
-        key
       end
     end
   end

@@ -11,7 +11,7 @@ module Qd3v
           def call(id:)
             T.assert_type!(id, String)
 
-            handle_response(ErrKind::THREAD_NOT_FOUND) do
+            handle_response(err_kind: ErrKind::THREAD_NOT_FOUND) do
               client.threads.retrieve(id:)
             end.fmap { Structs::Thread.new(**_1) }
           end

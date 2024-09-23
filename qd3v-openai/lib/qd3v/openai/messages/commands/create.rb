@@ -14,7 +14,7 @@ module Qd3v
 
             logger.info("Creating new message", thread_id:, prompt:)
 
-            handle_response(ErrKind::THREAD_MESSAGE_CREATION_ERROR) do
+            handle_response(err_kind: ErrKind::THREAD_MESSAGE_CREATION_ERROR) do
               client.messages.create(thread_id:,
                                      parameters: {
                                        role:    'user', # Required for manually created messages

@@ -1,12 +1,13 @@
 # RUBY STDLIB
 
 require 'pathname'
+require 'forwardable'
 
 #
 # ACTIVE SUPPORT
 #
 
-# This first loads only minimum for cherry-picking to work
+# This first loads only minimum required
 require 'active_support'
 require 'active_support/core_ext/hash/keys' # deep_symbolize
 require 'active_support/core_ext/object/blank'
@@ -18,36 +19,21 @@ require 'active_support/core_ext/integer/time'
 require 'active_support/core_ext/time/calculations'
 
 #
-# CORE GEMS
+# CORE GEMS TUNING
 #
 
-require 'zeitwerk'
 require 'sorbet-runtime'
-require 'semantic_logger'
-require 'ruby-enum'
 
+# Making monads globally accessible
 require 'dry/monads'
-require 'dry/system'
-require 'dry/initializer'
-require 'dry/configurable'
-
-include Dry::Monads[:result, :maybe, :try, :list] # Making monads classes globally accessible
-
-#
-# REVIEW: Don't depend on gems not used
-#
-
-require 'dry/schema'
-require 'dry/validation'
-
-Dry::Validation.load_extensions(:monads)
-Dry::Schema.load_extensions(:json_schema)
+include Dry::Monads[:result, :maybe, :try, :list]
 
 # NOTE: This adds #to_json methods, we don't need to use AS extension
-# IMPORTANT: If we add default option do symbolize keys, that may break app third-party gems, expecting string keys
-# Docs: https://github.com/ohler55/oj/blob/develop/pages/Options.md
+# WARN: If we add default option do symbolize keys, that may break app third-party gems, expecting string keys
+# DOCS: https://github.com/ohler55/oj/blob/develop/pages/Options.md
+#       https://github.com/ohler55/oj/blob/develop/pages/Rails.md
 require 'oj'
-Oj.mimic_JSON
+Oj.optimize_rails
 
 #
 # LOADING ENV + ENVBANG
@@ -55,60 +41,88 @@ Oj.mimic_JSON
 
 # env loading. In production (containers build) we use this to load release env vars from .env.local file
 # NOTE: there's a build-in reader from env files and vars: https://github.com/dry-rb/dry-system/tree/main/lib/dry/system/provider_sources
-require_relative 'load_env'
-require_relative 'env_bang'
-require_relative 'config'
+# These are running in global namespace
+require_relative 'global/env_bang'
+require_relative 'global/load_env'
+require_relative 'global/types'
 
-require_relative 'types' # common and custom types
-require_relative 'err' # standard Error class
-require_relative 'ek' # error kind build helper
+# Updating EB config
+ENV_BANG.config do |c|
+  add_class :log_level do |value, options|
+    if value.present?
+      value.to_s.downcase.strip.to_sym
+    else
+      options.fetch(:default, :info)
+    end
+  end
 
-# Providers from system/providers are loaded automatically
+  add_class :env do |value, *|
+    value = begin
+      value.to_s.to_sym
+    rescue StandardError
+      '<unparsable>'
+    end
+
+    return value if ENV_BANG.environments.include?(value)
+
+    abort("[ENV] Unknown environment: APP_ENV='#{value}'")
+  end
+
+  c.use :APP_ENV, class: :env
+  c.use :APP_LOG_LEVEL, class: :log_level, default: :info
+  c.use :APP_LOG_TO_STDOUT, class: :boolean, default: true
+
+  c.use :QD3V_CORE_TEST_COVERAGE, class: :boolean, default: false
+end
+
+#
+# DRY/SYSTEM
+#
+
+# Providers depend on Types defined (and altered ENV_BANG too)
+# Configurable is dep not required by system gem for some reason
+# https://dry-rb.org/gems/dry-system/1.0/external-provider-sources/
+require 'dry/configurable'
+require 'dry/system'
+Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
+
+#
+# QD3V+CORE
+#
+
+require_relative 'err' # This one goes to root `Qd3v` module
+
 module Qd3v
   module Core
-    class Container < Dry::System::Container
-      # Env plugin: just a helper
-      use :env, inferrer: -> { ENV! }
-      use :zeitwerk, debug:      ENV['ZEITWERK_DEBUG'],
-                     eager_load: ENV!.prod? || ENV['QD3V_TEST_COVERAGE']
+    def self.loader
+      @loader ||= Zeitwerk::Loader.for_gem_extension(Qd3v).tap do
+        it.enable_reloading if ENV!.dev?
+        it.log! if ENV['ZEITWERK_DEBUG']
+        it.eager_load if ENV!.prod? || ENV![:QD3V_CORE_TEST_COVERAGE]
 
-      # use :settings
+        root = File.expand_path("..", __dir__)
 
-      configure do |config|
-        config.inflector = Dry::Inflector.new do |inflections|
-          inflections.acronym('FS')
-          inflections.acronym('OAI')
-          inflections.acronym('TTS')
-          inflections.acronym('HTTP')
-          inflections.acronym('XML')
-          inflections.acronym('JS')
-          inflections.acronym('AE')
-          inflections.acronym('AI')
-        end
+        it.ignore(
+          "#{root}/qd3v-core.rb",
+          "#{root}/qd3v/err.rb",
+          "#{root}/qd3v/i18n",
+          "#{root}/qd3v/global",
+          "#{root}/qd3v/providers")
 
-        config.name = :qd3v_core
-        config.root = __dir__
-        config.component_dirs.add('core') do |dir|
-          dir.memoize = true
-          dir.namespaces.add_root(const: 'qd3v/core')
-        end
+        it.inflector.inflect('ek' => 'EK')
       end
+    end
 
-      register(:env, ENV_BANG)
+    loader.setup
+
+    # Providers from system/providers are loaded automatically
+    class Container < Dry::System::Container
+      register_provider(:logger, from: :qd3v_core)
     end
 
     DI = Container.injector.freeze
 
-    if ENV!.test?
-      require 'dry/system/stubs'
-      Container.enable_stubs!
-    else
-      Container.finalize! unless ENV['APP_SKIP_FINALIZE']
-    end
-
-    at_exit do
-      Container.shutdown! # Call #shutdown on all providers
-    end
+    at_exit { Container.shutdown! }
   end
 
   def self.load_i18n(root_dir)

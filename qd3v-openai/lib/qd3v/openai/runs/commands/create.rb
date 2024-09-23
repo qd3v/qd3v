@@ -29,7 +29,7 @@ module Qd3v
             # NOTE: here we get plain string response because of streaming
             # REVIEW: One downside: we've got no stats or other stuff completely
 
-            handle_response(ErrKind::THREAD_RUN_CREATION_ERROR) do
+            handle_response(err_kind: ErrKind::THREAD_RUN_CREATION_ERROR) do
               response = client.runs.create(thread_id:,
                                             parameters: {assistant_id:,
                                                          stream:,

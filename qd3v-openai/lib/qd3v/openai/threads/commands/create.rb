@@ -11,7 +11,7 @@ module Qd3v
           #
           # @return [Dry::Monads::Result::Success<Structs::Thread>, Dry::Monads::Result::Failure] The retrieved assistant wrapped in a Success. In case of an error, the method will return a Failure monad.
           def call
-            handle_response(ErrKind::THREAD_CREATION_ERROR) do
+            handle_response(err_kind: ErrKind::THREAD_CREATION_ERROR) do
               client.threads.create
             end.fmap { Structs::Thread.new(**_1) }
           end

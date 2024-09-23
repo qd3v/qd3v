@@ -10,9 +10,9 @@ module Qd3v
           def call(id:)
             T.assert_type!(id, String)
 
-            handle_response(ErrKind::ASSISTANT_NOT_FOUND) do
+            handle_response(err_kind: ErrKind::ASSISTANT_NOT_FOUND) do
               client.assistants.retrieve(id:)
-            end.fmap { Structs::Assistant.new(**_1) }
+            end.fmap { Structs::Assistant.new(**it) }
           end
         end
       end

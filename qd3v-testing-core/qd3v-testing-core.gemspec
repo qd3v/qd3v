@@ -1,4 +1,7 @@
-require_relative 'lib/version'
+lib = File.expand_path("lib", __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require "qd3v/testing/core/version"
 
 Gem::Specification.new do |spec|
   spec.name        = 'qd3v-testing-core'
