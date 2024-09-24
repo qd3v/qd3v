@@ -17,10 +17,9 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
   end
 
   start do
-    target.start(:logger)
-
+    # NOTE: target[:logger] also start it. The target.start(:logger) returns container!
     logger = target[:logger]
-    logger.debug { "[TESTING] loading RSpec config..." }
+    logger.debug { "[TESTING] Loading RSpec config..." }
 
     # COVERAGE
 
@@ -84,12 +83,7 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
       # MODULES
       #
 
-      config.include(Module.new do
-        define_method(:logger) do
-          @logger = logger
-        end
-      end)
-
+      config.include(Module.new { define_method(:logger) { logger } })
       config.include ActiveSupport::Testing::TimeHelpers
 
       #
@@ -105,7 +99,8 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
       end
     end
 
-    register(:rspec_loaded, true)
-    register(:rspec, RSpec.configuration)
+    Dir[File.join(Dir.pwd, 'spec', 'support', '**', '*.rb')].each { |f| require f }
+
+    register(:rspec, RSpec)
   end
 end

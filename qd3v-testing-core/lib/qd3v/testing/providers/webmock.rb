@@ -4,13 +4,9 @@ Dry::System.register_provider_source(:webmock, group: :qd3v_testing_core) do
   end
 
   start do
-    target.start(:logger)
-
-    logger = target[:logger]
-    logger.debug { "[TESTING] Loading Webmock config..." }
-
     target.start(:rspec)
+    target[:logger].debug { "[TESTING] Loading Webmock config..." }
 
-    register(:webmock_loaded, true)
+    register(:webmock, WebMock)
   end
 end

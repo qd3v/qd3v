@@ -1,6 +1,7 @@
 # NOTE: We have to use FQ names here because of block
 # Types: https://dry-rb.org/gems/dry-types/1.7/built-in-types/
 # Configurable: https://dry-rb.org/gems/dry-configurable/1.0/#usage
+
 Dry::System.register_provider_source(:logger, group: :qd3v_core) do
   setting :level,
           default:     :debug,
@@ -19,6 +20,7 @@ Dry::System.register_provider_source(:logger, group: :qd3v_core) do
   # see https://github.com/rocketjob/semantic_logger/tree/master/lib/semantic_logger/formatters
 
   prepare do
+    # Just in case, should be already required in core.rb
     require 'semantic_logger'
   end
 

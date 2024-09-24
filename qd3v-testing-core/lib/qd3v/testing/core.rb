@@ -7,7 +7,24 @@ end
 
 Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
 
+#
+# MAIN
+#
+
 module Qd3v
+  # If user didn't provide own configuration, use default
+  # NOTE: Call DI#finalize! if you rely on defaults
+  #
+  # If you need webmock/vcr, add
+  #
+  # @example
+  #   Qd3v::DI.class_eval do
+  #     register_provider(:webmock, from: :qd3v_testing_core)
+  #     register_provider(:vcr, from: :qd3v_testing_core)
+  #   end
+
+  DI.register_provider_with_defaults(:rspec, from: :qd3v_testing_core)
+
   module Testing
     module Core
       def self.loader
@@ -23,14 +40,6 @@ module Qd3v
       end
 
       loader.setup
-
-      class Container < Dry::System::Container
-        register_provider(:logger, from: :qd3v_core)
-      end
-
-      DI = Container.injector.freeze
-
-      at_exit { Container.shutdown! }
     end
   end
 end

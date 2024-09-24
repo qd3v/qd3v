@@ -23,7 +23,6 @@ Dry::System.register_provider_source(:openai_client, group: :qd3v_openai) do
   end
 
   start do
-    target.start(:logger)
     logger = target[:logger]
 
     OpenAI::Client.new(access_token:    config[:access_token],

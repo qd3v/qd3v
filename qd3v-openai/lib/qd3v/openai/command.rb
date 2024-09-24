@@ -5,7 +5,6 @@ module Qd3v
     # - use Client to send request
     class Command
       include SemanticLogger::Loggable
-      include DI[client: :openai_client]
 
       protected
 
@@ -20,6 +19,10 @@ module Qd3v
             {response_body:   exception.response_body,
              response_status: exception.response_status}]
         end
+      end
+
+      def client
+        @client ||= DI[:openai_client]
       end
     end
   end

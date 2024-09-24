@@ -9,8 +9,12 @@
 
 # TODO
 
-- [ ] make `amazing_print` optional
+- [ ] make `amazing_print` optional for production JSON logging
 - [ ] port short format dev logger
+
+# EXPERIMENTS
+
+- [ ] there's `require 'dry/system/provider_sources/settings'` that does similar `dotenv` loading (see notes)
 
 # SORBET
 

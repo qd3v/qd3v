@@ -23,11 +23,13 @@ require 'active_support/core_ext/time/calculations'
 #
 
 require 'sorbet-runtime'
+require 'semantic_logger' # Eager load mode require `SemanticLogger::Loggable` to be defined
 
 # Making monads globally accessible
 require 'dry/monads'
 include Dry::Monads[:result, :maybe, :try, :list]
 
+# optimize_rails patch AS#to_json etc
 # NOTE: This adds #to_json methods, we don't need to use AS extension
 # WARN: If we add default option do symbolize keys, that may break app third-party gems, expecting string keys
 # DOCS: https://github.com/ohler55/oj/blob/develop/pages/Options.md
@@ -72,39 +74,46 @@ ENV_BANG.config do |c|
   c.use :APP_LOG_LEVEL, class: :log_level, default: :info
   c.use :APP_LOG_TO_STDOUT, class: :boolean, default: true
 
-  c.use :QD3V_CORE_TEST_COVERAGE, class: :boolean, default: false
+  c.use :APP_EAGER_LOAD, class: :boolean, default: false
+  c.use :APP_TEST_COVERAGE, class: :boolean, default: false
 end
 
 #
-# DRY/SYSTEM
+# DI
 #
 
 # Providers depend on Types defined (and altered ENV_BANG too)
-# Configurable is dep not required by system gem for some reason
 # https://dry-rb.org/gems/dry-system/1.0/external-provider-sources/
-require 'dry/configurable'
+
 require 'dry/system'
 Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
 
+# DI.register_provider(:logger, from: :qd3v_core)
+
 #
-# QD3V+CORE
+# MAIN
 #
 
+require_relative 'di' # This one goes to root `Qd3v` module
 require_relative 'err' # This one goes to root `Qd3v` module
 
 module Qd3v
   module Core
+    # If user didn't provide own configuration, use default
+    # NOTE: Call DI#finalize! if you rely on defaults
+    DI.register_provider_with_defaults(:logger, from: :qd3v_core)
+
     def self.loader
       @loader ||= Zeitwerk::Loader.for_gem_extension(Qd3v).tap do
         it.enable_reloading if ENV!.dev?
         it.log! if ENV['ZEITWERK_DEBUG']
-        it.eager_load if ENV!.prod? || ENV![:QD3V_CORE_TEST_COVERAGE]
 
         root = File.expand_path("..", __dir__)
 
         it.ignore(
           "#{root}/qd3v-core.rb",
           "#{root}/qd3v/err.rb",
+          "#{root}/qd3v/di.rb",
           "#{root}/qd3v/i18n",
           "#{root}/qd3v/global",
           "#{root}/qd3v/providers")
@@ -115,14 +124,12 @@ module Qd3v
 
     loader.setup
 
-    # Providers from system/providers are loaded automatically
-    class Container < Dry::System::Container
-      register_provider(:logger, from: :qd3v_core)
+    def self.eager_load!
+      $stderr.puts("[EAGER LOADING] #{self}")
+      loader.eager_load
     end
 
-    DI = Container.injector.freeze
-
-    at_exit { Container.shutdown! }
+    eager_load! if ENV!.live? || ENV![:APP_EAGER_LOAD]
   end
 
   def self.load_i18n(root_dir)
