@@ -2,6 +2,7 @@ require 'env_bang'
 
 # This class is a central reference to all env vars. We use it inside containers via #env method
 # https://github.com/jcamenisch/ENV_BANG
+# TODO: Use define_method + YARD for predicate methods once API stabilized
 class ENV_BANG
   class << self
     def env
@@ -18,12 +19,19 @@ class ENV_BANG
       env == :staging
     end
 
+    # TODO: experimental. DRY and extend this approach to the rest of methods
     def live?
-      prod? || staging?
+      condition = prod? || staging?
+
+      return condition unless block_given?
+      yield if condition
     end
 
     def dev?
-      env == :development
+      condition = env == :development
+
+      return condition unless block_given?
+      yield if condition
     end
 
     def test?
