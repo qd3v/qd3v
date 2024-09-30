@@ -106,6 +106,17 @@ Style/MutableConstant:
   Enabled: no
   EnforcedStyle: strict
 
+# Keep ->{} instead of `lambda`
+# https://docs.rubocop.org/rubocop/cops_style.html#stylelambda
+Style/Lambda:
+  Enabled: yes
+  EnforcedStyle: literal
+
+# lambda.call(x, y) <-> lambda.(x, y)
+# Let me decide
+Style/LambdaCall:
+  Enabled: no
+
 # Avoid using {...} for multi-line blocks.
 Style/BlockDelimiters:
   Enabled: no
