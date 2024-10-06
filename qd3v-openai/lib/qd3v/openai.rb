@@ -4,7 +4,7 @@ require 'qd3v/core'
 ENV_BANG.config do |c|
   c.use :QD3V_OPENAI_TOKEN
   c.use :QD3V_OPENAI_ORG_ID
-  c.use :QD3V_OPENAI_MAX_RETRY, class: Integer, default: 0
+  c.use :QD3V_OPENAI_MAX_RETRY, class: Integer, default: 8
   c.use :QD3V_OPENAI_FARADAY_LOG_DEBUG, class: :boolean, default: false
 end
 

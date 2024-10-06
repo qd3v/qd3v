@@ -1,5 +1,6 @@
 # NOTE: there's `log_errors:` client option, which is useless: lot logs to `Logger.new($stdout)`
 #       and there's no way to substitute logger
+# NOTE: As for default for env vars (if not set), look for gem's entrypoint file
 Dry::System.register_provider_source(:openai_client, group: :qd3v_openai) do
   setting :access_token,
           default:     ENV![:QD3V_OPENAI_TOKEN],
@@ -25,13 +26,15 @@ Dry::System.register_provider_source(:openai_client, group: :qd3v_openai) do
   start do
     logger = target[:logger]
 
+    # WARN: The embeddings API often unreliable
+    # sleep_time = initial_delay * (backoff_factor ** attempts)
     OpenAI::Client.new(access_token:    config[:access_token],
                        organization_id: config[:organization_id]) do |f|
       f.request :retry,
                 max:                 config[:max_retry],
-                interval:            0.5,
-                interval_randomness: 0.5,
-                backoff_factor:      2,
+                interval:            1,
+                interval_randomness: 1,
+                backoff_factor:      1.2,
                 exceptions:          [Faraday::ServerError]
       f.request :json, encoder: Oj
 
