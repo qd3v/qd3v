@@ -23,7 +23,7 @@ module Qd3v
 
         # @!attribute [r] instructions
         #   @return [String] the instructions for the assistant
-        attribute :instructions, Types::Strict::String
+        attribute :instructions, Types::Strict::String.optional
 
         # @!attribute [r] metadata
         #   @return [Hash] the metadata for the assistant
@@ -31,11 +31,11 @@ module Qd3v
 
         # @!attribute [r] top_p
         #   @return [Float] the top_p attribute
-        attribute :top_p, Types::Strict::Float
+        attribute :top_p, Types::Strict::Float.optional.default(0.5)
 
         # @!attribute [r] temperature
         #   @return [Float] the temperature of the assistant
-        attribute :temperature, Types::Strict::Float
+        attribute :temperature, Types::Strict::Float.optional.default(1.0)
 
         # @!attribute [r] response_format
         #   @return [String] the response format of the assistant
