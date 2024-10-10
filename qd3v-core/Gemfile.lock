@@ -51,6 +51,7 @@ GEM
     ast (2.4.2)
     attr_extras (7.1.0)
     base64 (0.2.0)
+    benchmark (0.3.0)
     bigdecimal (3.1.8)
     coderay (1.1.3)
     concurrent-ruby (1.3.4)
@@ -214,6 +215,7 @@ PLATFORMS
   x86_64-darwin-23
 
 DEPENDENCIES
+  benchmark
   pry
   qd3v-core!
   qd3v-testing-core!

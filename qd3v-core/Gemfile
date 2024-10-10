@@ -11,4 +11,5 @@ end
 
 group :test do
   gem 'qd3v-testing-core', path: '../qd3v-testing-core'
+  gem 'benchmark', require: false
 end
