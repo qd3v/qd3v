@@ -4,7 +4,8 @@ module Qd3v
     #
     # @example
     #   module A
-    #     class EK < Qd3v::Core::EK; end
+    #     # Namespacing EK: this maps to correct i18n error keys
+    #     EK = Class.new(Qd3v::Core::EK)
     #
     #     module ErrKind
     #       PROBLEM = EK[:problem] # i18n: en.a.err_kind.problem
@@ -51,15 +52,21 @@ module Qd3v
       private
 
       # Handle class QFN to i18n key translation using Zeitwerk inflection rules
+      #
+      # +constantize+ tries to find a declared constant with the name specified
+      # in the string. It raises a NameError when the name is not in CamelCase
+      # or is not initialized. Returns constant itself
+      # WARN: `#underscore` requires correctly configured ActiveSupport::Inflector
       def infer_namespace
-        # Basically re-build each const name, then convert to underscore
-        self.class.name.split('::')[...-1].map do
-          inflector.camelize(it.downcase, nil).underscore
-        end.join('.')
-      end
-
-      def inflector
-        Zeitwerk::Inflector.new
+        # - cut off own class name
+        # - get_const (parent module/s)
+        # - underscore replaces `::` with `/` (the case of nested namespace, like qd3v/openai)
+        # - replacing `/` with dots
+        self.class.name.split('::')[...-1]
+            .join('::')
+            .constantize.to_s
+            .underscore
+            .tr('/', '.')
       end
     end
   end

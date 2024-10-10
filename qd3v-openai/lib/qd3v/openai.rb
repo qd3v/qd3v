@@ -20,9 +20,14 @@ Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
 
 module Qd3v
   module OpenAI
+    # Namespacing EK: this maps to correct i18n error keys
+    EK = Class.new(Qd3v::Core::EK)
+
     # If user didn't provide own configuration, use default
     # NOTE: Call DI#finalize! if you rely on defaults
     DI.register_provider_with_defaults(:openai_client, from: :qd3v_openai)
+
+    INFLECTIONS = {'openai' => 'OpenAI'}.freeze
 
     def self.loader
       @loader ||= Zeitwerk::Loader.for_gem_extension(Qd3v).tap do
@@ -36,7 +41,7 @@ module Qd3v
           "#{root}/qd3v/i18n",
           "#{root}/qd3v/providers")
 
-        it.inflector.inflect('openai' => 'OpenAI')
+        it.inflector.inflect(INFLECTIONS)
       end
     end
 
@@ -48,6 +53,12 @@ module Qd3v
     end
 
     eager_load! if ENV!.live? || ENV![:APP_EAGER_LOAD]
+
+    # This one is to support underscore for i18n's const->key
+    # REVIEW: is there a better way and rely only on ZW? I found only Inflector#capitalize
+    ActiveSupport::Inflector.inflections do |inflect|
+      INFLECTIONS.values.each { inflect.acronym it }
+    end
   end
 
   Qd3v.load_i18n(__dir__)

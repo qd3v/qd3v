@@ -12,7 +12,7 @@ require 'active_support'
 require 'active_support/core_ext/hash/keys' # deep_symbolize
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/filters' # squish
-require 'active_support/core_ext/string/inflections' # titlecase, constantize
+require 'active_support/core_ext/string/inflections' # titleize, constantize
 require 'active_support/concern'
 require 'active_support/core_ext/hash/slice'
 require 'active_support/core_ext/integer/time'

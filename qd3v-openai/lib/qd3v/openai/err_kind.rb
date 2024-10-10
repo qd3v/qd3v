@@ -1,8 +1,5 @@
 module Qd3v
   module OpenAI
-    class EK < Qd3v::Core::EK
-    end
-
     module ErrKind
       RESPONSE_ERROR       = EK[:response_error]
       RESPONSE_PARSE_ERROR = EK[:response_parse_error]
