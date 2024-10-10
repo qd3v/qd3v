@@ -4,7 +4,7 @@
 
 Dry::System.register_provider_source(:logger, group: :qd3v_core) do
   setting :level,
-          default:     :debug,
+          default:     ENV![:APP_LOG_LEVEL],
           constructor: Types::Strict::Symbol
 
   setting :dir,
