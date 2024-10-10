@@ -29,14 +29,15 @@ module Qd3v
       end
 
       alias to_s key
+      alias inspect key
 
       # NOTE: i18n will prepend `<lang>`
       # Example `Qd3v::Services::EK` -> `qd3v.services`
       # Example `Qd3v::Services::HTTP::EK` -> `qd3v.services.http`
       def namespace
         # NOTE: here we drop EK part using range
-        @namespace ||= self.class.name.split('::')[...-1].map(&:underscore).join('.').tap do |ns|
-          if ns == 'ek'
+        @namespace ||= infer_namespace.tap do |ns|
+          if ns.end_with?('.ek')
             raise NotImplementedError,
                   'EK class: you forgot to subclass me in your namespace'
           end
@@ -45,6 +46,20 @@ module Qd3v
 
       def self.[](err_kind)
         new(err_kind)
+      end
+
+      private
+
+      # Handle class QFN to i18n key translation using Zeitwerk inflection rules
+      def infer_namespace
+        # Basically re-build each const name, then convert to underscore
+        self.class.name.split('::')[...-1].map do
+          inflector.camelize(it.downcase, nil).underscore
+        end.join('.')
+      end
+
+      def inflector
+        Zeitwerk::Inflector.new
       end
     end
   end

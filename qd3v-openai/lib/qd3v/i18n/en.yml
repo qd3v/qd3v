@@ -1,4 +1,3 @@
-# WARN: there's a quirk here: namespace is `open_ai` instead of `openai`
 en:
   qd3v:
     openai:
