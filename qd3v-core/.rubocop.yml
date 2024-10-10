@@ -143,7 +143,6 @@ Style/SpecialGlobalVars:
 Style/StderrPuts:
   Enabled: no
 
-
 #
 # LAYOUT
 #
@@ -156,6 +155,11 @@ Layout/ArgumentAlignment:
 Layout/ArrayAlignment:
   Enabled: yes
   EnforcedStyle: with_first_element
+
+# Adds line after fast return. But why?
+# https://docs.rubocop.org/rubocop/cops_layout.html#layoutemptylineafterguardclause
+Layout/EmptyLineAfterGuardClause:
+  Enabled: no
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
