@@ -1,0 +1,5 @@
+en:
+  qd3v:
+    pg:
+      err_kind:
+        unique_violation: "Unique constraint violated"
