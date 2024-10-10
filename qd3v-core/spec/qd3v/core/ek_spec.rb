@@ -1,7 +1,6 @@
 module Qd3v
   module Core
     RSpec.describe EK do
-
       describe 'success' do
         let(:subject) do
           described_class[:dummy_error]

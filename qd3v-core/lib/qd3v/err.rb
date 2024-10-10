@@ -195,13 +195,12 @@ module Qd3v
       @exception.present?
     end
 
-    DEFAULT_SUBSCRIBER = lambda { |err|
-      # NOTE: here we use the fact that Err already provide #message
+    LOG_KEYS = %i[message err_kind exception_message file_line errors context]
+
+    DEFAULT_SUBSCRIBER = ->(err) {
       SemanticLogger[err.source].error do
-        err.to_h.except(:source, :err_kind, :exception, :exception_class,
-                        :message_i18n_key,
-                        :http_status, :http_status_description,
-                        :file_path).reject { _2.blank? }
+        # Here we use the fact that Err already provide :message key
+        err.to_h.slice(*LOG_KEYS).reject { _2.blank? }
       end
     }
 

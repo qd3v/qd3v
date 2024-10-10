@@ -1,7 +1,6 @@
 module Qd3v
   module OpenAI
     RSpec.describe EK do
-
       describe 'success' do
         let(:subject) do
           described_class[:embedding_creation_error]

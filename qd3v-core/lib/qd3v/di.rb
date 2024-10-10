@@ -13,7 +13,7 @@ module Qd3v
     class << self
       def register_provider_with_defaults(name, from:)
         @provider_with_defaults     ||= {}
-        @provider_with_defaults[name] = lambda {
+        @provider_with_defaults[name] = -> {
           register_provider(name, from:)
         }
       end

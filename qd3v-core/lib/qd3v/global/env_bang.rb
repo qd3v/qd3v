@@ -24,6 +24,7 @@ class ENV_BANG
       condition = prod? || staging?
 
       return condition unless block_given?
+
       yield if condition
     end
 
@@ -31,6 +32,7 @@ class ENV_BANG
       condition = env == :development
 
       return condition unless block_given?
+
       yield if condition
     end
 

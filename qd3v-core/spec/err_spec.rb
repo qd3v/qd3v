@@ -17,12 +17,16 @@ module Qd3v
         expect(error.errors).to eq({}) # forced to be hash if nil (same for context)
         expect(error.context).to eq(a: 100)
         expect(error.err_kind).to eq(err_kind)
+        expect(error.exceptional?).to eq(false)
         expect(error.to_h).to include(context:)
         expect(error.to_public).to include(http_status:             410,
                                            http_status_description: 'Gone')
         expect(error.source).to eq(self.class.name)
         expect(error.file_path).to match(/err_spec\.rb\z/)
         expect(error.file_line).to match(/err_spec\.rb:\d+\z/)
+      end
+
+      example "#inspect" do
       end
 
       example "with exception" do
