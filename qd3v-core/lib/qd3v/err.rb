@@ -82,8 +82,10 @@ module Qd3v
     # @param errors [Hash<Symbol,String>] - The ActiveModel-style hash of errors. Push abstract to `base: ["test"]`
     # @param context [Hash] - anything useful for developers, or internal use
     # @param http_status [Integer] - server must know what to send
-    def initialize(err_kind, binding:, exception: nil, errors: {}, context: {},
+    def initialize(err_kind, binding:, exception: nil,
+                   errors: {}, context: {},
                    http_status: DEFAULT_HTTP_STATUS_CODE)
+
       T.assert_type!(err_kind, ::Qd3v::Core::EK)
       T.assert_type!(binding, ::Binding)
 
@@ -97,29 +99,25 @@ module Qd3v
       @http_status = http_status
       @source      = binding.receiver.class.name
 
-      # REVIEW: This exceptions handling addition is a WIP
-      # Processing exception info
+      # Saving exception info
+      # NOTE: Exception (if present) location usually point deeper than binding
       unless exception.nil?
         unless exception.is_a?(StandardError)
-          raise ArgumentError, "Argument `exception` should be really exception"
+          raise ArgumentError, "Argument `exception` should be real exception"
         end
 
         loc                   = exception&.backtrace_locations&.first
         # return blank string for file_line we check later if build successfully
-        @file_path            = loc&.path
-        @file_line            = [@file_path, loc&.lineno].compact.join(':')
+        @exception_file_path  = loc&.path
+        @exception_file_line  = [@exception_file_path, loc&.lineno].compact.join(':')
         @exception            = exception
         @exception_class      = exception&.class
         @exception_class_name = exception&.class&.name
         @exception_message    = exception&.message
-
       end
 
-      # No exception or can't get location correctly (is that even possible?)
-      if @file_line.blank?
-        @file_path, line = binding.source_location
-        @file_line       = [@file_path, line].join(':')
-      end
+      @file_path, line = binding.source_location
+      @file_line       = [@file_path, line].join(':')
 
       self.class.broadcast(self)
     end
@@ -128,8 +126,9 @@ module Qd3v
       new(kind, **args).tap { yield it if block_given? }.to_failure
     end
 
-    attr_reader :err_kind, :exception, :exception_message, :exception_class, :exception_class_name,
-                :errors, :context, :source, :file_path, :file_line
+    attr_reader :err_kind, :errors, :context, :source, :file_path, :file_line,
+                :exception, :exception_message, :exception_class, :exception_class_name,
+                :exception_file_path, :exception_file_line
 
     def http_status
       @http_status || DEFAULT_HTTP_STATUS_CODE
@@ -139,20 +138,57 @@ module Qd3v
       @http_status_description ||= HTTP_STATUS_CODES[http_status]
     end
 
-    # NOTE: I think we shouldn't compact here, let pattern matching work
+    # I think we shouldn't compact here, let pattern matching work
     def to_public
       @to_public ||= {message:, message_i18n_key:, err_kind:, errors:,
                       http_status:, http_status_description:}
     end
 
+    # All known information (not intended to leak to public)
     def to_h
       @to_h ||=
-        to_public.merge(context:, source:,
+        to_public.merge(context:,
+                        source:,
+                        file_path:,
+                        file_line:,
                         exception:,
                         exception_class:,
                         exception_class_name:,
                         exception_message:,
-                        file_path:, file_line:)
+                        exception_file_path:,
+                        exception_file_line:)
+    end
+
+    def to_h_compact
+      @to_h_compact ||= to_h.compact
+    end
+
+    # TODO: Move SML stuff out from here
+    # Context is reserved keyword in SML payload (`payload` is too, btw)
+    SEMANTIC_LOGGER_KEYS = %i[message
+                              err_kind
+                              exception_message
+                              errors context
+                              file_line
+                              exception_file_line]
+
+    SEMANTIC_LOGGER_COMP_KEYS_REMAPPING = {context: :err_context}
+    SEMANTIC_LOGGER_SUBSCRIBER          = ->(err) {
+      SemanticLogger[err.source].error { err.to_semantic_log_entry }
+    }
+
+    def to_semantic_log_entry
+      # Here we use the fact that Err already provide :message key
+      @to_semantic_log_entry ||=
+        to_h_compact
+          .slice(*SEMANTIC_LOGGER_KEYS)
+          .transform_keys(SEMANTIC_LOGGER_COMP_KEYS_REMAPPING)
+    end
+
+    INSPECT_KEYS = %i[message err_kind errors context].freeze
+
+    def inspect
+      @inspect ||= "Err" + to_h_compact.slice(*INSPECT_KEYS).inspect
     end
 
     # @example
@@ -195,18 +231,10 @@ module Qd3v
       @exception.present?
     end
 
-    LOG_KEYS = %i[message err_kind exception_message file_line errors context]
-
-    DEFAULT_SUBSCRIBER = ->(err) {
-      SemanticLogger[err.source].error do
-        # Here we use the fact that Err already provide :message key
-        err.to_h.slice(*LOG_KEYS).reject { _2.blank? }
-      end
-    }
-
     class << self
+      # TODO: This is designed to be configurable
       def subscribers
-        @subscribers ||= [DEFAULT_SUBSCRIBER]
+        @subscribers ||= [SEMANTIC_LOGGER_SUBSCRIBER]
       end
 
       # Should respond to #call(Err). See `DEFAULT_SUBSCRIBER` above

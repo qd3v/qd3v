@@ -26,15 +26,24 @@ module Qd3v
         expect(error.file_line).to match(/err_spec\.rb:\d+\z/)
       end
 
+      # @warning: this API is unstable yet
       example "#inspect" do
+        f = Err[err_kind, binding:, errors:, context:].failure
+
+        expect(f.inspect).to eq(<<~STR.squish!)
+          Err{message: "Dummy error used for testing",
+              err_kind: qd3v.core.err_kind.dummy_error,
+              errors: {base: ["oops1"]},
+              context: {a: 100}}
+        STR
       end
 
       example "with exception" do
         f = begin
-          raise "Nope"
-        rescue StandardError => e
-          Err[err_kind, binding:, exception: e, errors:]
-        end
+              raise "Nope"
+            rescue StandardError => e
+              Err[err_kind, binding:, exception: e, errors:]
+            end
 
         expect(f).to be_a(Failure)
 
@@ -56,7 +65,7 @@ module Qd3v
 
         f = Err[err_kind, binding:, errors: nil, context:] do
           counter += 1
-          err      = it
+          err     = it
         end
 
         expect(f).to be_an_instance_of(Failure)
@@ -107,16 +116,16 @@ module Qd3v
       describe "Try integration" do
         example "to failure" do
           f = Try { raise "Oops" }
-              .to_result
-              .or { |exception| Err[err_kind, binding:, exception:, context:, errors:] }
+                .to_result
+                .or { |exception| Err[err_kind, binding:, exception:, context:, errors:] }
 
           expect(f).to be_a(Failure)
         end
 
         example "keep success" do
           f = Try { 100 }
-              .to_result
-              .or { |exception| Err[err_kind, binding:, exception:] }
+                .to_result
+                .or { |exception| Err[err_kind, binding:, exception:] }
 
           expect(f).to eq(Success(100))
         end
