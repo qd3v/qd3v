@@ -2,7 +2,8 @@
 
 - preconfigured RSpec/Webmock/VCR providers
 - pluggable simplecov with `APP_TEST_COVERAGE` env var or using config
-- though there are `vcr` and `webmock` deps, I'm using them so often, that keep together. They are loaded on-demand anyway
+- though there are `vcr` and
+  `webmock` deps, I'm using them so often, that keep together. They are loaded on-demand anyway
 - autoloading of helpers from `spec/support`
 - `it { logger.info }` logger injected
 - activesupport time helpers

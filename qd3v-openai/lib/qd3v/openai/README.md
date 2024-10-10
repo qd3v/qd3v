@@ -1,4 +1,4 @@
-Thin functional interface and adapter for OpenAI API gem. 
+Thin functional interface and adapter for OpenAI API gem.
 
 # NOTES
 

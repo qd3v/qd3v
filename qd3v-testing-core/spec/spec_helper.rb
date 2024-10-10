@@ -1,5 +1,5 @@
-ENV['APP_ENV']           = 'test'
-ENV['APP_LOG_LEVEL']     = 'debug'
+ENV['APP_ENV']       = 'test'
+ENV['APP_LOG_LEVEL'] = 'debug'
 # Triggering eager load
 ENV['APP_TEST_COVERAGE'] = '1'
 

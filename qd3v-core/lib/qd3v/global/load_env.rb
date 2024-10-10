@@ -24,7 +24,7 @@ proc do
 
   # Switch to "production" mode (skips few dev-only middleware, like error rendering)
   # Rack use String type -> `Rack::Server.middleware["development"] = []`
-  ENV['RACK_ENV'] = %w[development test].include?(env) ? env : 'deployment'
+  ENV['RACK_ENV']     = %w[development test].include?(env) ? env : 'deployment'
 
   #
   # LOADING ENV FILES FOR DEV/TEST ONLY

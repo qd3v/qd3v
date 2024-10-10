@@ -60,10 +60,10 @@ ENV_BANG.config do |c|
 
   add_class :env do |value, *|
     value = begin
-      value.to_s.to_sym
-    rescue StandardError
-      '<unparsable>'
-    end
+              value.to_s.to_sym
+            rescue StandardError
+              '<unparsable>'
+            end
 
     return value if ENV_BANG.environments.include?(value)
 
@@ -133,7 +133,7 @@ module Qd3v
   end
 
   def self.load_i18n(root_dir)
-    files           = Dir[File.join(root_dir, "i18n", "*.yml")]
+    files          = Dir[File.join(root_dir, "i18n", "*.yml")]
     I18n.load_path += files
   end
 

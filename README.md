@@ -1,4 +1,4 @@
-This code is extracted from my pet projects (WIP) 
+This code is extracted from my pet projects (WIP)
 
 # TODO
 

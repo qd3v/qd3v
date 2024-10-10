@@ -41,9 +41,9 @@ module Qd3v
       example "with exception" do
         f = begin
               raise "Nope"
-        rescue StandardError => e
+            rescue StandardError => e
               Err[err_kind, binding:, exception: e, errors:]
-        end
+            end
 
         expect(f).to be_a(Failure)
 
@@ -65,7 +65,7 @@ module Qd3v
 
         f = Err[err_kind, binding:, errors: nil, context:] do
           counter += 1
-          err      = it
+          err     = it
         end
 
         expect(f).to be_an_instance_of(Failure)
