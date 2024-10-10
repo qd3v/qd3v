@@ -15,7 +15,7 @@ module Qd3v
 
         # @!attribute [r] name
         #   @return [String] the name of the assistant
-        attribute :name, Types::Strict::String
+        attribute :name, Types::Strict::String.optional
 
         # @!attribute [r] model
         #   @return [String] the model of the assistant

@@ -1,7 +1,7 @@
-# WARN: there's some quirk here: namespace is `open_ai` instead of `openai`
+# WARN: there's a quirk here: namespace is `open_ai` instead of `openai`
 en:
   qd3v:
-    open_ai:
+    openai:
       err_kind:
         response_error: "Server response error"
         response_parse_error: "Response parsing error"
