@@ -99,6 +99,7 @@ GEM
     hashdiff (1.1.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
+    io-console (0.7.2)
     json (2.7.2)
     json_expressions (0.9.0)
     language_server-protocol (3.17.0.3)
@@ -129,6 +130,8 @@ GEM
       prism (~> 1.0)
       sorbet-runtime (>= 0.5.9204)
     regexp_parser (2.9.2)
+    reline (0.5.10)
+      io-console (~> 0.5)
     rexml (3.3.8)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -219,6 +222,7 @@ DEPENDENCIES
   pry
   qd3v-core!
   qd3v-testing-core!
+  reline
   rubocop-performance
   sorbet
   tapioca
