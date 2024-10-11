@@ -106,14 +106,16 @@ module Qd3v
           raise ArgumentError, "Argument `exception` should be real exception"
         end
 
-        loc                   = exception&.backtrace_locations&.first
+        loc                      = exception&.backtrace_locations&.first
         # return blank string for file_line we check later if build successfully
-        @exception_file_path  = loc&.path
-        @exception_file_line  = [@exception_file_path, loc&.lineno].compact.join(':')
-        @exception            = exception
-        @exception_class      = exception&.class
-        @exception_class_name = exception&.class&.name
-        @exception_message    = exception&.message
+        @exception_file_path     = loc&.path
+        @exception_file_line     = [@exception_file_path, loc&.lineno].compact.join(':')
+        @exception               = exception
+        @exception_class         = exception&.class
+        @exception_class_name    = exception&.class&.name
+        @exception_message       = exception&.message
+        @exception_cause         = exception&.cause
+        @exception_cause_message = exception&.cause&.message
       end
 
       @file_path, line = binding.source_location
@@ -128,7 +130,7 @@ module Qd3v
 
     attr_reader :err_kind, :errors, :context, :source, :file_path, :file_line,
                 :exception, :exception_message, :exception_class, :exception_class_name,
-                :exception_file_path, :exception_file_line
+                :exception_cause, :exception_cause_message, :exception_file_path, :exception_file_line
 
     def http_status
       @http_status || DEFAULT_HTTP_STATUS_CODE
@@ -155,6 +157,8 @@ module Qd3v
                         exception_class:,
                         exception_class_name:,
                         exception_message:,
+                        exception_cause:,
+                        exception_cause_message:,
                         exception_file_path:,
                         exception_file_line:)
     end
@@ -168,6 +172,7 @@ module Qd3v
     SEMANTIC_LOGGER_KEYS = %i[message
                               err_kind
                               exception_message
+                              exception_cause_message
                               errors context
                               file_line
                               exception_file_line]
@@ -185,11 +190,22 @@ module Qd3v
           .transform_keys(SEMANTIC_LOGGER_COMP_KEYS_REMAPPING)
     end
 
-    INSPECT_KEYS = %i[message err_kind errors context].freeze
+    INSPECT_KEYS = %i[message exception_message exception_cause_message err_kind errors
+                      context].freeze
 
     def inspect
       @inspect ||= "Err" + to_h_compact.slice(*INSPECT_KEYS).inspect
     end
+
+    # To fully comply with Exception interface (it expects `to_str` for anything passed as message
+    # to constructor), adding this method, which is used for implicit conversion to String (e.g.
+    # `String.new(x).length`). Anyway, there is the difference, and these methods can return
+    # different results, but making code more unpredictable :(
+
+    # Docs: https://ruby-doc.org/3.4.0.preview2/implicit_conversion_rdoc.html#label-String-Convertible+Objects
+    alias to_str inspect
+    # This one is called in strings interpolation, puts x (which looks like implicit, btw), etc
+    alias to_s inspect
 
     # @example
     #   failure =>  Failure(err_kind: context: {a:}, errors:)

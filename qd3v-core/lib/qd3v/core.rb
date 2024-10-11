@@ -94,8 +94,11 @@ Dry::System.register_provider_sources(File.join(__dir__, 'providers'))
 # MAIN
 #
 
-require_relative 'di' # This one goes to root `Qd3v` module
-require_relative 'err' # This one goes to root `Qd3v` module
+# These go to root `Qd3v` module
+
+require_relative 'di'
+require_relative 'err'
+require_relative 'unexpected_err'
 
 module Qd3v
   module Core
@@ -113,6 +116,7 @@ module Qd3v
         it.ignore(
           "#{root}/qd3v-core.rb",
           "#{root}/qd3v/err.rb",
+          "#{root}/qd3v/unexpected_err.rb",
           "#{root}/qd3v/di.rb",
           "#{root}/qd3v/i18n",
           "#{root}/qd3v/global",
