@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new('~> 3.3')
 
   # spec.add_runtime_dependency 'dry-struct'
-  spec.add_runtime_dependency 'qd3v-core'
   spec.add_runtime_dependency 'pg'
+  spec.add_runtime_dependency 'qd3v-core'
 
   spec.require_paths = ['lib']
   spec.files         = Dir['lib/**/*.{rb,yml}']

@@ -63,10 +63,10 @@ module Qd3v
         # - underscore replaces `::` with `/` (the case of nested namespace, like qd3v/openai)
         # - replacing `/` with dots
         self.class.name.split('::')[...-1]
-          .join('::')
-          .constantize.to_s
-          .underscore
-          .tr('/', '.')
+            .join('::')
+            .constantize.to_s
+            .underscore
+            .tr('/', '.')
       end
     end
   end

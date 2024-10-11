@@ -51,7 +51,6 @@ module Qd3v
 
     eager_load! if ENV!.live? || ENV![:APP_EAGER_LOAD]
 
-
     # This one is to support underscore for i18n's const->key
     # REVIEW: is there a better way and rely only on ZW? I found only Inflector#capitalize
     ActiveSupport::Inflector.inflections do |inflect|

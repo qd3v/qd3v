@@ -17,7 +17,7 @@ module Qd3v
             handle_response(err_kind: ErrKind::THREAD_MESSAGE_CREATION_ERROR) do
               client.messages.create(thread_id:,
                                      parameters: {
-                                       role: 'user', # Required for manually created messages
+                                       role:    'user', # Required for manually created messages
                                        content: prompt})
             end.fmap { Structs::Message.new(**_1) }
           end

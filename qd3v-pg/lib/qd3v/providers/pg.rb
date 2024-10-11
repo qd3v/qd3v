@@ -14,17 +14,19 @@ Dry::System.register_provider_source(:pg, group: :qd3v_pg) do
     logger = target[:logger]
     uri    = URI(config[:uri])
 
-    host     = uri.host
-    database = uri.path
+    env      = ENV!.name.upcase
+    host     = uri.host.presence || "localhost"
+    database = uri.path.to_s.delete_prefix('/')
 
     ::PG.connect(uri).tap do
-      logger.info("[PG] Connected to PG", host: host, database: database)
+      $stderr.printf("[PG/%<env>s] Connected to '%<host>s/%<database>s'\n",
+                     {env:, host:, database:})
     end.then { register(:pg, it) }
-        .tap { logger.debug { "PG client provider started" } }
+        .tap { logger.debug { {message: "PG client provider started"} } }
   end
 
   stop do
-    warn("[PG] Closing connection...")
+    target[:logger].debug { {message: "[PG] Closing connection..."} }
     container[:pg].close
   end
 end

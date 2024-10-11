@@ -106,7 +106,7 @@ module Qd3v
           raise ArgumentError, "Argument `exception` should be real exception"
         end
 
-        loc = exception&.backtrace_locations&.first
+        loc                   = exception&.backtrace_locations&.first
         # return blank string for file_line we check later if build successfully
         @exception_file_path  = loc&.path
         @exception_file_line  = [@exception_file_path, loc&.lineno].compact.join(':')

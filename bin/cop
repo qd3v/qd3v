@@ -9,5 +9,8 @@ CMD      = 'cd "%s" && bundle exec rubocop --autocorrect'
 
 PROJECTS.map do
   cmd = CMD % [it]
-  Thread.new { puts %x[#{cmd}] }
+  Thread.new do
+    puts "Running #{cmd}"
+    puts %x[#{cmd}]
+  end
 end.map(&:join)

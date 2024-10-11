@@ -2,6 +2,7 @@
 PROJECTS := qd3v-core \
 	qd3v-openai \
 	qd3v-testing-core \
+	qd3v-pg
 
 # Command templates
 # Removed, too noisy: --regenerate-todo

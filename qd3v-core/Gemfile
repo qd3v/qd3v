@@ -4,8 +4,8 @@ gemspec
 
 group :development do
   # temp until pry catch-up with 3.4? (readline extracted from stdlib)
-  gem 'reline', require: false
   gem 'pry', require: false
+  gem 'reline', require: false
   gem 'rubocop-performance', require: false
   gem 'sorbet', require: false
   gem "tapioca", require: false
