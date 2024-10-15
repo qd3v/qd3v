@@ -194,7 +194,7 @@ module Qd3v
                       context].freeze
 
     def inspect
-      @inspect ||= "Err" + to_h_compact.slice(*INSPECT_KEYS).inspect
+      @inspect ||= self.class.name + to_h_compact.slice(*INSPECT_KEYS).inspect
     end
 
     # To fully comply with Exception interface (it expects `to_str` for anything passed as message

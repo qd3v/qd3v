@@ -31,7 +31,7 @@ module Qd3v
         f = Err[err_kind, binding:, errors:, context:].failure
 
         expect(f.inspect).to eq(<<~STR.squish!)
-          Err{message: "Dummy error used for testing",
+          Qd3v::Err{message: "Dummy error used for testing",
               err_kind: qd3v.core.err_kind.dummy_error,
               errors: {base: ["oops1"]},
               context: {a: 100}}

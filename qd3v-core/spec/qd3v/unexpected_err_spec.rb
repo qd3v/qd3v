@@ -22,7 +22,7 @@ module Qd3v
         end
 
         expect(&test).to raise_error(UnexpectedErr) do
-          expect(it.message).to match(/Got Unexpected Err object: Err.+Dummy error used.+Test cause/i)
+          expect(it.message).to match(/Got Unexpected Err object: Qd3v::Err.+Dummy error used.+Test cause/i)
           expect(it.cause).to be_a(StandardError)
           expect(it.cause.message).to eq("Test cause")
         end

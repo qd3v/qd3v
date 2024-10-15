@@ -10,5 +10,9 @@ module Qd3v
     end
 
     attr_reader :cause
+
+    def self.[](err)
+      new(err)
+    end
   end
 end
