@@ -1,10 +1,7 @@
-RSpec.shared_context :shared do
-  # MONAD SHORTCUTS
+RSpec.shared_context :commands do
+  include_context :dry_result
 
-  let(:success) { result.success }
-  let(:failure) { result.failure }
-
-  # REQUEST
+  # COMMANDS/REQUESTS
 
   let(:access_token) { ENV![:QD3V_OPENAI_TOKEN] }
   let(:organization_id) { ENV![:QD3V_OPENAI_ORG_ID] }
@@ -14,7 +11,11 @@ RSpec.shared_context :shared do
      "Openai-Organization" => organization_id}
   end
 
-  let(:headers) { {headers: auth_headers} }
+  let(:headers) do
+    {headers: auth_headers.merge(
+      {"Openai-Beta"  => "assistants=v2",
+       "Content-Type" => "application/json"})}
+  end
 
   # RESPONSE
 

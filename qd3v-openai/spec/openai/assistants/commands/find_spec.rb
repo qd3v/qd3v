@@ -3,7 +3,7 @@ module Qd3v
     module Assistants
       module Commands
         RSpec.describe Find do
-          include_context :shared
+          include_context :commands
 
           let(:id) { "aid" }
           let(:result) { subject.call(id:) }
