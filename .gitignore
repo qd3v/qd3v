@@ -7,16 +7,25 @@ Brewfile.lock.json
 
 # Commmon dirs
 .build
-.idea
 .bundle
 .coverage
 .secrets
 .swagger
 
-# CUSTOM
+# JETBRAINS
+
+# Because of global gitignored `/.idea` the root one can't be added.
+# I don't want to change global, the stupid solution is to force add
+# git add -f .idea/{*.iml,modules.xml}
+
+#.idea/*
+#!.idea/*.iml
+#!.idea/modules.xml
 
 # Jetbrains requests collection
 .requests
+
+# CUSTOM
 
 .rubocop_todo.yml
 
