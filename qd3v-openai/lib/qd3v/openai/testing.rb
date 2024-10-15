@@ -31,7 +31,7 @@ module Qd3v
 
       # RESPONSE
 
-      RESPONSE_HEADERS = { }
+      RESPONSE_HEADERS = {}
 
       STATUS_OK           = 200
       STATUS_CREATED      = 201
@@ -43,11 +43,12 @@ module Qd3v
       STATUS_NOT_FOUND    = 404
 
       # Yield only works for methods, call block the old way
-      ENDPOINT = ->(method, path, &block) {
-        url = File.join(BASE_URL, path)
+      ENDPOINT = ->(method, *path, &block) {
+        url = File.join(BASE_URL, *path)
         block.call(WebMock::API.stub_request(method, url))
       }
 
+      # TODO: DRY after having whole bunch of stubs
       module Threads
 
         class << self
@@ -55,23 +56,47 @@ module Qd3v
           def id = "thread_#{SecureRandom.alphanumeric(25)}"
 
           def stub_create_success(id: id)
-            to_return = {
-              status:  STATUS_OK,
-              body:    build_response(id:)
-            }
+            to_return = {status: STATUS_OK, body: thread_response(id:)}
 
             ENDPOINT.(:post, 'threads') do
               it.with(body: {}, **HEADERS).to_return_json(**to_return)
             end
           end
 
-          def build_response(id: id)
+          def stub_find_success(id: id)
+            to_return = {status: STATUS_OK, body: thread_response(id:)}
+
+            ENDPOINT.(:get, 'threads', id) do
+              it.with(body: {}, **HEADERS).to_return_json(**to_return)
+            end
+          end
+
+          def stub_not_found(id: id)
+            to_return = {status: STATUS_NOT_FOUND, body: not_found_response(id:)}
+
+            ENDPOINT.(:get, 'threads', id) do
+              it.with(body: {}, **HEADERS).to_return_json(**to_return)
+            end
+          end
+
+          def thread_response(id: id)
             {
               id:,
               object:         "thread",
               created_at:     Time.current.to_i,
               metadata:       {},
               tool_resources: {}
+            }
+          end
+
+          def not_found_response(id: id)
+            {
+              "error": {
+                "message": "No thread found with id '#{id}'.",
+                "type":    "invalid_request_error",
+                "param":   nil,
+                "code":    nil
+              }
             }
           end
         end
