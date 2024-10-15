@@ -12,6 +12,392 @@
     </content>
     <orderEntry type="jdk" jdkName="ruby-3.4.0-p-2" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="qd3v-core (v[path]) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="job@kulagin.dev" />
+              <option name="homepage" value="https://kulagin.dev" />
+              <option name="summary" value="Base microframework for my pet projects" />
+            </AdditionalInfo>
+          </option>
+          <option name="dependencies">
+            <list>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="~&gt;" />
+                      <option name="version" value="7.2" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="activesupport" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="i18n" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="oj" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="rake" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="ruby-enum" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="zeitwerk" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="amazing_print" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="semantic_logger" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dotenv" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="env_bang" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="sorbet-runtime" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dry-configurable" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dry-initializer" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dry-monads" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dry-system" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="dry-types" />
+              </Dependency>
+            </list>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="qd3v-core" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$MODULE_DIR$/../qd3v-core" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../qd3v-core/bin" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/lib" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.run" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.coverage" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../qd3v-core/bin" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/lib" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.run" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.coverage" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/../qd3v-core/bin" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.run" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-core/.coverage" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="qd3v-testing-core (v0.2.0.beta1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="job@kulagin.dev" />
+              <option name="homepage" value="https://kulagin.dev" />
+              <option name="summary" value="Testing core" />
+            </AdditionalInfo>
+          </option>
+          <option name="dependencies">
+            <list>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="json_expressions" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="qd3v-core" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="~&gt;" />
+                      <option name="version" value="3.13" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="rspec" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="simplecov" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="super_diff" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="vcr" />
+              </Dependency>
+              <Dependency>
+                <option name="bounds">
+                  <list>
+                    <Bound>
+                      <option name="operator" value="&gt;=" />
+                      <option name="version" value="0" />
+                    </Bound>
+                  </list>
+                </option>
+                <option name="doRequire" value="true" />
+                <option name="name" value="webmock" />
+              </Dependency>
+            </list>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="qd3v-testing-core" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$MODULE_DIR$/../qd3v-testing-core" />
+          <option name="version" value="0.2.0.beta1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/lib" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.bundle" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.coverage" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/lib" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.bundle" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.coverage" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/log" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/tmp" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/spec" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.idea" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.bundle" />
+          <root url="file://$MODULE_DIR$/../qd3v-testing-core/.coverage" />
+        </excluded>
+      </library>
+    </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v7.2.1, ruby-3.4.0-p-2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="addressable (v2.8.7, ruby-3.4.0-p-2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="amazing_print (v1.6.0, ruby-3.4.0-p-2) [gem]" level="application" />
