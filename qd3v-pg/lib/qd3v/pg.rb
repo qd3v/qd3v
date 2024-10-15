@@ -1,4 +1,3 @@
-# require 'dry/struct'
 require 'qd3v/core'
 
 ENV_BANG.config do |c|

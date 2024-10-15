@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="QD3V-ALL-SUITES" type="CompoundRunConfigurationType">
+    <toRun name="QD3V-CORE-ALL" type="RSpecRunConfigurationType" />
+    <toRun name="QD3V-OPENAI-ALL" type="RSpecRunConfigurationType" />
+    <toRun name="QD3V-PG-ALL" type="RSpecRunConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -15,8 +15,7 @@ Brewfile.lock.json
 
 # CUSTOM
 
-# Jetbrains run configurations and requests collection
-.run
+# Jetbrains requests collection
 .requests
 
 .rubocop_todo.yml
