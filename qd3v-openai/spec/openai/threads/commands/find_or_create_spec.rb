@@ -29,9 +29,8 @@ module Qd3v
               end
             end
 
-
             context 'not found->create' do
-              let(:di) { {cmd_find: cmd_find_f, cmd_create: } }
+              let(:di) { {cmd_find: cmd_find_f, cmd_create:} }
 
               example do
                 expect(result).to be_success
@@ -42,7 +41,7 @@ module Qd3v
 
           describe 'failure' do
             context 'not found->creation failed' do
-              let(:di) { {cmd_find: cmd_find_f, cmd_create: cmd_create_f } }
+              let(:di) { {cmd_find: cmd_find_f, cmd_create: cmd_create_f} }
 
               example do
                 expect(result).to be_failure
