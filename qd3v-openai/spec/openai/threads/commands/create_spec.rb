@@ -6,7 +6,7 @@ module Qd3v
           include_context :dry_result
 
           describe 'success' do
-            let!(:request_stub) do
+            let!(:create_stub) do
               Testing::Threads.stub_create_success(id: 'test')
             end
 
@@ -15,7 +15,7 @@ module Qd3v
               expect(success).to be_a(Structs::Thread)
               expect(success.id).to eq("test")
 
-              expect(request_stub).to have_been_requested
+              expect(create_stub).to have_been_requested
             end
           end
 

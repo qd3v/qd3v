@@ -30,7 +30,7 @@ module Qd3v
 
               example "error" do
                 expect(result).to be_failure
-                expect(error).to be_a(Err)
+                expect(error).to be_an(Err)
 
                 expect(err_kind).to eq(ErrKind::THREAD_NOT_FOUND)
 

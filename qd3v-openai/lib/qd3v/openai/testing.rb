@@ -37,6 +37,7 @@ module Qd3v
       STATUS_CREATED      = 201
       STATUS_ACCEPTED     = 202
       STATUS_NO_CONTENT   = 204
+
       STATUS_BAD_REQUEST  = 400
       STATUS_UNAUTHORIZED = 401
       STATUS_FORBIDDEN    = 403
@@ -57,6 +58,14 @@ module Qd3v
 
           def stub_create_success(id: id)
             to_return = {status: STATUS_OK, body: thread_response(id:)}
+
+            ENDPOINT.(:post, 'threads') do
+              it.with(body: {}, **HEADERS).to_return_json(**to_return)
+            end
+          end
+
+          def stub_create_bad_request(id: id)
+            to_return = {status: STATUS_BAD_REQUEST}
 
             ENDPOINT.(:post, 'threads') do
               it.with(body: {}, **HEADERS).to_return_json(**to_return)
