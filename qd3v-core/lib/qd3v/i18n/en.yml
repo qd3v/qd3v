@@ -4,3 +4,4 @@ en:
       err_kind:
         dummy_error: "Dummy error used for testing"
         json_parsing_error: "Failed to parse JSON"
+        schema_validation_failed: "Failed to validate schema"

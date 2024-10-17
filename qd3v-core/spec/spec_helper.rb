@@ -1,6 +1,8 @@
 ENV['APP_ENV']           = 'test'
 ENV['APP_LOG_LEVEL']     = 'debug'
-ENV['APP_TEST_COVERAGE'] = 'yes'
+ENV['APP_TEST_COVERAGE'] = 'no'
+
+# WARN: coverage break ruby 3.4p2 parser
 
 require 'benchmark'
 

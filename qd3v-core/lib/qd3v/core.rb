@@ -29,6 +29,9 @@ require 'semantic_logger' # Eager load mode require `SemanticLogger::Loggable` t
 require 'dry/monads'
 include Dry::Monads[:result, :maybe, :try, :list]
 
+require 'dry/schema'
+Dry::Schema.load_extensions(:json_schema, :monads)
+
 # optimize_rails patch AS#to_json etc
 # NOTE: This adds #to_json methods, we don't need to use AS extension
 # WARN: If we add default option do symbolize keys, that may break app third-party gems, expecting string keys

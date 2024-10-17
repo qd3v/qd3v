@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'dry-configurable'
   spec.add_runtime_dependency 'dry-initializer'
   spec.add_runtime_dependency 'dry-monads'
+  spec.add_runtime_dependency 'dry-schema'
   spec.add_runtime_dependency 'dry-system'
   spec.add_runtime_dependency 'dry-types'
 
