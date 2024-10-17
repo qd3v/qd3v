@@ -122,7 +122,7 @@ module Qd3v
           "#{root}/qd3v/global",
           "#{root}/qd3v/providers")
 
-        it.inflector.inflect('ek' => 'EK')
+        it.inflector.inflect('ek' => 'EK', 'json' => 'JSON')
       end
     end
 
