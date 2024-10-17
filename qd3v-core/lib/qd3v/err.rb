@@ -128,6 +128,14 @@ module Qd3v
       new(kind, **args).tap { yield it if block_given? }.to_failure
     end
 
+    def self.dummy
+      new(Core::ErrKind::DUMMY_ERROR, binding:)
+    end
+
+    def self.dummy_failure
+      self[Core::ErrKind::DUMMY_ERROR, binding:]
+    end
+
     attr_reader :err_kind, :errors, :context, :source, :file_path, :file_line,
                 :exception, :exception_message, :exception_class, :exception_class_name,
                 :exception_cause, :exception_cause_message, :exception_file_path, :exception_file_line
