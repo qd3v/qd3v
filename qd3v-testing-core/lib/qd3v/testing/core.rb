@@ -36,6 +36,8 @@ module Qd3v
           it.ignore(
             "#{root}/qd3v-testing-core.rb",
             "#{root}/qd3v/testing/providers")
+
+          it.inflector.inflect('rspec' => 'RSpec')
         end
       end
 

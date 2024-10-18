@@ -42,6 +42,7 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
 
     # RSPEC BASICS
 
+    # Docs https://rspec.info/features/3-13/rspec-core/configuration/
     RSpec.configure do |config|
       config.expose_dsl_globally                  = false
       config.fail_if_no_examples                  = true
@@ -70,7 +71,9 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
       # FILTERING
       #
 
-      config.run_all_when_everything_filtered = true
+      # WARN: this one is deprecated, use #filter_run_when_matching instead.
+      #   Docs: https://rspec.info/features/3-13/rspec-core/filtering/filter-run-when-matching/
+      config.run_all_when_everything_filtered = false
 
       if ENV['APP_TEST_FORCE_ALL'] == 1
         # this MAY override CLI args
@@ -83,7 +86,8 @@ Dry::System.register_provider_source(:rspec, group: :qd3v_testing_core) do
       # MODULES
       #
 
-      config.include(Module.new { define_method(:logger) { logger } })
+      config.include(Qd3v::Testing::Core::RSpec::Logger)
+      config.include(Qd3v::Testing::Core::RSpec::Fixtures)
       config.include ActiveSupport::Testing::TimeHelpers
 
       #
