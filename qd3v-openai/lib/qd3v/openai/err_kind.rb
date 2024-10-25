@@ -5,6 +5,7 @@ module Qd3v
       RESPONSE_PARSE_ERROR = EK[:response_parse_error]
 
       ASSISTANT_NOT_FOUND    = EK[:assistant_not_found]
+      ASSISTANT_CREATE_ERROR = EK[:assistant_create_error]
       ASSISTANT_UPDATE_ERROR = EK[:assistant_update_error]
 
       THREAD_NOT_FOUND              = EK[:thread_not_found]

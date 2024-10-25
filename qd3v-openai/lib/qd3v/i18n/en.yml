@@ -6,6 +6,7 @@ en:
         response_parse_error: "Response parsing error"
 
         assistant_not_found: "OAI assistant not found"
+        assistant_create_error: "OAI assistant creation error"
         assistant_update_error: "OAI assistant update error"
 
         thread_not_found: "OAI thread not found"
