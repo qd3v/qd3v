@@ -14,6 +14,7 @@
 
 - [ ] make `amazing_print` optional for production JSON logging
 - [ ] port short format dev logger
+- [ ] convert String utils to refinement
 
 # EXPERIMENTS
 
