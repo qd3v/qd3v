@@ -2,16 +2,17 @@ en:
   qd3v:
     openai:
       err_kind:
-        response_error: "Server response error"
-        response_parse_error: "Response parsing error"
+        response_error: "OpenAI response error"
+        response_parse_error: "OpenAI response parsing error"
 
-        assistant_not_found: "OAI assistant not found"
-        assistant_create_error: "OAI assistant creation error"
-        assistant_update_error: "OAI assistant update error"
+        assistant_not_found: "OpenAI assistant not found"
+        assistant_create_error: "OpenAI assistant creation error"
+        assistant_update_error: "OpenAI assistant update error"
 
-        thread_not_found: "OAI thread not found"
-        thread_creation_error: "Unable to create OAI thread"
-        thread_message_creation_error: "Unable to create OAI message for thread"
-        thread_run_creation_error: "Error while creating OAI run"
+        thread_not_found: "OpenAI thread not found"
+        thread_creation_error: "Unable to create OpenAI thread"
+        thread_deletion_error: "Unable to delete OpenAI thread"
+        thread_message_creation_error: "Unable to create OpenAI message for thread"
+        thread_run_creation_error: "Error while creating OpenAI run"
 
-        embedding_creation_error: "Error while creating OAI embedding"
+        embedding_creation_error: "Error while creating OpenAI embedding"

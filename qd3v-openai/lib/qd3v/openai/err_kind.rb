@@ -10,6 +10,7 @@ module Qd3v
 
       THREAD_NOT_FOUND              = EK[:thread_not_found]
       THREAD_CREATION_ERROR         = EK[:thread_creation_error]
+      THREAD_DELETION_ERROR         = EK[:thread_deletion_error]
       THREAD_MESSAGE_CREATION_ERROR = EK[:thread_message_creation_error]
       THREAD_RUN_CREATION_ERROR     = EK[:thread_run_creation_error]
 
