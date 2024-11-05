@@ -20,7 +20,7 @@ proc do
   # Ensure env var updated for development case.
   ENV['APP_ENV'] = ENV['RAILS_ENV'] = env
 
-  $stderr.puts("[ENVIRONMENT: #{env}]}".upcase)
+  $stderr.puts("[ENVIRONMENT: #{env}]".upcase)
 
   # Switch to "production" mode (skips few dev-only middleware, like error rendering)
   # Rack use String type -> `Rack::Server.middleware["development"] = []`
