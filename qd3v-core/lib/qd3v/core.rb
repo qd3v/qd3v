@@ -145,4 +145,12 @@ module Qd3v
   end
 
   load_i18n(__dir__)
+
+  DI.before(:finalize) do
+    $stderr.puts("[DI] Finalizing container...")
+  end
+
+  DI.after(:finalize) do
+    $stderr.puts("[DI] Container finalized!")
+  end
 end
