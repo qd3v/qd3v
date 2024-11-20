@@ -47,12 +47,13 @@ module Qd3v
         # attribute :object, Types::Strict::String.default("thread.message")
 
         # NOTE: id is set in path segment
+        # WARN: we can only change metadata
         def to_update_payload
-          to_hash.except(:id, :created_at, :assistant_id)
+          to_hash.slice(:metadata)
         end
 
         def to_create_payload
-          to_update_payload
+          to_hash.except(:id, :created_at) # , :assistant_id
         end
       end
     end
