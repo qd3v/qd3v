@@ -33,7 +33,8 @@ module OpenAI
         parser.feed(chunk) do |event, data, _event_id, _reconnection_time|
           break if data == "[DONE]"
 
-          user_proc.call(event:, data: JSON.parse(data), bytesize:)
+          # Patching (note symbolize, this is temporary)
+          user_proc.call(event:, data: JSON.parse(data, symbolize_names: true), bytesize:)
         end
       end
     end
