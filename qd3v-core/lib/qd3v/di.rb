@@ -22,7 +22,7 @@ module Qd3v
         super do
           (@provider_with_defaults || {}).each do |name, proc|
             unless key?(name)
-              $stderr.puts("[DI] Registering '#{name}' provider with defaults")
+              $stderr.puts("[DI] Starting '#{name}' provider with defaults")
               proc.call
             end
           end

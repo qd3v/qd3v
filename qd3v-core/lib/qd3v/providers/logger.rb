@@ -7,6 +7,9 @@ Dry::System.register_provider_source(:logger, group: :qd3v_core) do
           default:     ENV![:APP_LOG_LEVEL],
           constructor: Types::Strict::Symbol
 
+  setting :log_to_file, constructor: Types::Nominal::Bool, default: true
+  setting :log_to_stdout, constructor: Types::Nominal::Bool, default: true
+
   setting :dir,
           default:     File.join(Dir.pwd, 'log'),
           constructor: -> { Pathname(it) }
@@ -28,6 +31,11 @@ Dry::System.register_provider_source(:logger, group: :qd3v_core) do
     # REVIEW: get back Core::Logging::Production.new ?
     # https://logger.rocketjob.io/filtering.html
 
+    log_info = proc do |env, file, fmt, level|
+      $stderr.printf("[LOGGER/%s] Logging to '%s', formatter: %s, level: %s\n",
+                     env.upcase, file, fmt, level)
+    end
+
     log_level = config[:level]
     log_env   = ENV!.name
     formatter = ENV!.live? ? :json : :color
@@ -35,20 +43,23 @@ Dry::System.register_provider_source(:logger, group: :qd3v_core) do
 
     SemanticLogger.default_level = log_level
 
-    if ENV!.live? || ENV!.dev?
+    if config[:log_to_stdout]
       $stdout.sync
 
       SemanticLogger.add_appender(io: $stdout, formatter:)
-    else
+
+      log_info.call(log_env, file_name, formatter, log_level)
+    end
+
+    if config[:log_to_file]
       log_dir   = config[:dir]
       file_name = log_dir.join("#{log_env}.log").to_s
       log_dir.mkpath unless log_dir.exist?
 
       SemanticLogger.add_appender(file_name:, formatter:)
-    end
 
-    $stderr.printf("[LOGGER/%s] Logging to '%s', formatter: %s, level: %s\n",
-                   log_env.upcase, file_name, formatter, log_level)
+      log_info.call(log_env, file_name, formatter, log_level)
+    end
 
     logger = SemanticLogger[config[:default_name]]
 
