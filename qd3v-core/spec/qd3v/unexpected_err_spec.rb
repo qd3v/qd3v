@@ -5,9 +5,9 @@ module Qd3v
       let(:context) { {a: 100} }
       example 'return context' do
         exception = begin
-                      raise "Test cause"
+          raise "Test cause"
         rescue StandardError => e
-                      e
+          e
         end
 
         err = Err.new(Core::ErrKind::DUMMY_ERROR, binding:, exception:, context:)

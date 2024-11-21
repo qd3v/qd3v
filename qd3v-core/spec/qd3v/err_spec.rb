@@ -40,9 +40,9 @@ module Qd3v
 
       example "with exception" do
         f = begin
-              raise "Nope"
+          raise "Nope"
         rescue StandardError => e
-              Err[err_kind, binding:, exception: e, errors:]
+          Err[err_kind, binding:, exception: e, errors:]
         end
 
         expect(f).to be_a(Failure)
@@ -116,16 +116,16 @@ module Qd3v
       describe "Try integration" do
         example "to failure" do
           f = Try { raise "Oops" }
-                .to_result
-                .or { |exception| Err[err_kind, binding:, exception:, context:, errors:] }
+              .to_result
+              .or { |exception| Err[err_kind, binding:, exception:, context:, errors:] }
 
           expect(f).to be_a(Failure)
         end
 
         example "keep success" do
           f = Try { 100 }
-                .to_result
-                .or { |exception| Err[err_kind, binding:, exception:] }
+              .to_result
+              .or { |exception| Err[err_kind, binding:, exception:] }
 
           expect(f).to eq(Success(100))
         end

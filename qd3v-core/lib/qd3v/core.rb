@@ -63,9 +63,9 @@ ENV_BANG.config do |c|
 
   add_class :env do |value, *|
     value = begin
-              value.to_s.to_sym
+      value.to_s.to_sym
     rescue StandardError
-              '<unparsable>'
+      '<unparsable>'
     end
 
     return value if ENV_BANG.environments.include?(value)

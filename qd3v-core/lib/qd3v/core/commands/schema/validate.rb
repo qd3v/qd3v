@@ -15,8 +15,8 @@ module Qd3v
                   .to_monad
                   .fmap { it.to_h }
                   .or { |result|
-                    Err[ErrKind::SCHEMA_VALIDATION_FAILED,
-                        binding:, context: {data: result.to_h}, errors: result.errors.to_h]
+              Err[ErrKind::SCHEMA_VALIDATION_FAILED,
+                  binding:, context: {data: result.to_h}, errors: result.errors.to_h]
             }
           end
         end

@@ -194,8 +194,8 @@ module Qd3v
       # Here we use the fact that Err already provide :message key
       @to_semantic_log_entry ||=
         to_h_compact
-          .slice(*SEMANTIC_LOGGER_KEYS)
-          .transform_keys(SEMANTIC_LOGGER_COMP_KEYS_REMAPPING)
+        .slice(*SEMANTIC_LOGGER_KEYS)
+        .transform_keys(SEMANTIC_LOGGER_COMP_KEYS_REMAPPING)
     end
 
     INSPECT_KEYS = %i[message exception_message exception_cause_message err_kind errors

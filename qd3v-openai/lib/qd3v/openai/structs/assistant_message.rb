@@ -2,7 +2,6 @@ module Qd3v
   module OpenAI
     module Structs
       class AssistantMessage < Message
-
         ROLE = "assistant"
 
         def initialize(**attributes)

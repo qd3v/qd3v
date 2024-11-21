@@ -47,6 +47,6 @@ Dry::System.register_provider_source(:openai_client, group: :qd3v_openai) do
 
       f.response :json, parser_options: {decoder: Oj, symbolize_names: true}
     end.then { register(:openai_client, it) }
-       .tap { logger.debug { "[OPENAI] Client provider started" } }
+                  .tap { logger.debug { "[OPENAI] Client provider started" } }
   end
 end

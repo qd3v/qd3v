@@ -2,7 +2,6 @@
 # WARN: This is proof-of-concept before making proposal
 module OpenAI
   module HTTP
-
     # $stderr.puts "Patching #{self}"
 
     private
