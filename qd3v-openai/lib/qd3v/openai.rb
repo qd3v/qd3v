@@ -40,7 +40,7 @@ module Qd3v
           "#{root}/qd3v-openai.rb",
           "#{root}/qd3v/i18n",
           "#{root}/qd3v/providers",
-          "#{root}/qd3v/openai_patch")
+          "#{root}/qd3v/openai_patch.rb")
 
         it.inflector.inflect(INFLECTIONS)
       end

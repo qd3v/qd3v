@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.platform              = Gem::Platform::RUBY
   spec.required_ruby_version = Gem::Requirement.new('~> 3.3')
 
-  spec.add_runtime_dependency 'activesupport', '~> 7.2'
+  spec.add_runtime_dependency 'activesupport', '~> 8.0'
 
   spec.add_runtime_dependency 'i18n'
   spec.add_runtime_dependency 'oj'
